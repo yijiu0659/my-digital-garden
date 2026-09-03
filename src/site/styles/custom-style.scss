@@ -12,31 +12,20 @@ body {
     //  }
 }
 
-/* 强制侧边栏常驻，大屏不消失 */
-@media (min-width: 768px) {
-  :root {
-    --dg-layout: two-column;
-  }
-  body {
-    grid-template-columns: 280px minmax(0,1fr);
-  }
-  .nav-sidebar {
-    display:block !important;
-    position: sticky;
-    top:0;
-    height:100vh;
-    overflow:auto;
+/* 大屏：阻止侧边栏在跳转笔记时消失，不改动整体网格布局 */
+@media screen and (min-width: 1024px) {
+  html body .nav-sidebar {
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
-/* ========== 修改正文宽度：解决正文太窄 ========== */
-/* 调大阅读内容最大行宽，原版限制很窄 */
+/* 加宽正文阅读区域，不破坏页面布局 */
 .content {
-  max-width: 950px !important; /* 数值越大正文越宽，建议 850‑1100，你可以自己改 */
-  width: 100% !important;
+  max-width: 1000px !important;
 }
 
-/* 如果想让页面左右留白更小，再加这一段 */
-.main-wrapper {
-  padding-inline: 2rem !important;
+/* 页面左右内边距微调 */
+.main {
+  padding: 2rem 3rem !important;
 }
