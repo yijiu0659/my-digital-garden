@@ -11,3 +11,32 @@ body {
     //   color: black;
     //  }
 }
+
+/* 强制侧边栏常驻，大屏不消失 */
+@media (min-width: 768px) {
+  :root {
+    --dg-layout: two-column;
+  }
+  body {
+    grid-template-columns: 280px minmax(0,1fr);
+  }
+  .nav-sidebar {
+    display:block !important;
+    position: sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+  }
+}
+
+/* ========== 修改正文宽度：解决正文太窄 ========== */
+/* 调大阅读内容最大行宽，原版限制很窄 */
+.content {
+  max-width: 950px !important; /* 数值越大正文越宽，建议 850‑1100，你可以自己改 */
+  width: 100% !important;
+}
+
+/* 如果想让页面左右留白更小，再加这一段 */
+.main-wrapper {
+  padding-inline: 2rem !important;
+}
