@@ -10,22 +10,15 @@ body {
     //  h1 {
     //   color: black;
     //  }
+
+    /* ========= 使用官方变量修改正文宽度，保证居中，不会跑偏 ========= */
+    --dg-content-max-width: 960px; /* 修改这个数字控制正文宽度，原版700px；1050会更宽 */
+    --dg-sidebar-max-width: 300px; /* 侧边栏宽度 */
 }
 
-/* 大屏：阻止侧边栏在跳转笔记时消失，不改动整体网格布局 */
-@media screen and (min-width: 1024px) {
-  html body .nav-sidebar {
+/* 大屏下，初始强制侧边栏显示（但是跳转笔记，JS仍然可能把它收起来，这是模板限制） */
+@media (min-width: 1100px) {
+  .nav-sidebar {
     display: block !important;
-    visibility: visible !important;
   }
-}
-
-/* 加宽正文阅读区域，不破坏页面布局 */
-.content {
-  max-width: 1000px !important;
-}
-
-/* 页面左右内边距微调 */
-.main {
-  padding: 2rem 3rem !important;
 }
