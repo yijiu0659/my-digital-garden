@@ -10,40 +10,5 @@ body {
     //  h1 {
     //   color: black;
     //  }
-.toc {
-    display: block !important;
-}
-    }
 
-@media (max-width: 1400px) {
-    .sidebar {
-        position: fixed !important;
-        top: 75px !important;
-        right: 30px !important;
-        left: auto !important;
-        width: 240px !important;
-        max-width: 240px !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        z-index: 11;
     }
-
-    .sidebar-container {
-        display: block !important;
-        height: auto !important;
-        max-height: calc(100vh - 100px);
-        overflow-y: auto;
-    }
-
-    .toc {
-        display: block !important;
-    }
-}
-
-@media (max-width: 1000px) {
-    .sidebar {
-        display: none !important;
-    }
-}
