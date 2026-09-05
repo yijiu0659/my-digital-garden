@@ -10,32 +10,8 @@ body {
     //  h1 {
     //   color: black;
     //  }
+.toc {
+    display: block !important;
 }
-/* 强制在 1400px 以下也显示右侧目录 */
-@media (max-width: 1400px) {
-    .toc {
-        display: block !important;
     }
 
-    .sidebar {
-        position: fixed !important;
-        left: auto !important;
-        right: 20px !important;
-        top: 75px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        max-width: 250px !important;
-        width: 250px !important;
-        height: auto !important;
-        border: none !important;
-    }
-
-    .sidebar-container {
-        display: block !important;
-        height: auto !important;
-    }
-
-    .content {
-        max-width: 650px !important;
-    }
-}
