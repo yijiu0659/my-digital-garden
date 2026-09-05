@@ -22,8 +22,13 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% set regionFallback = "components/navbar.njk" %}
     {% include "components/pluginRegion.njk" %}
 
-    <main class="content cm-s-obsidian print {{contentClasses}}">
-      <header>
+<main class="content cm-s-obsidian print {{contentClasses}}">
+
+{% if page.url != "/" %}
+<a href="/" class="back-home">← 返回首页</a>
+{% endif %}
+
+<header>
         {% if settings.dgShowInlineTitle === true %}
           <h1 data-note-icon="{% if noteIcon %}{{noteIcon}}{% else %}{{meta.noteIconsSettings.default}}{% endif %}">{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</h1>
         {% endif %}
