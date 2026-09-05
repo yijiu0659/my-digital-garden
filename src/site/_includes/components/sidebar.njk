@@ -8,50 +8,48 @@
                   {%if settings.dgShowLocalGraph === true%}
                         {%include "components/graphScript.njk"%}
                   {%endif%}
-<div class="toc" id="page-toc">
-    <div class="toc-title-container">
-        <div class="toc-title">本页目录</div>
-    </div>
 
-    <div class="toc-container" id="toc-container"></div>
-</div>
+                  {%if settings.dgShowToc === true%}
+                        {%set tocHtml= (content and (content | hideDataview | link | toc)) %}
+                        {%if tocHtml %}
+                              <div class="toc">
+                                    <div class="toc-title-container">
+                                          <div class="toc-title">
+                                                {% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}
+                                          </div>
+                                    </div>
+                                    <div class="toc-container">
+                                          {{ tocHtml | safe }}
+                                    </div>
+                              </div>
+                              <script>
+                                    (function() {
+                                          const tocLinks = document.querySelectorAll('.toc-container a[href^="#"]');
+                                          if (!tocLinks.length) return;
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const content = document.querySelector(".content");
-    const toc = document.getElementById("toc-container");
+                                          const headings = Array.from(tocLinks).map(link => {
+                                                const id = decodeURIComponent(link.getAttribute('href').slice(1));
+                                                return { link, target: document.getElementById(id) };
+                                          }).filter(h => h.target);
 
-    if (!content || !toc) return;
+                                          function updateActive() {
+                                                let current = headings[0];
+                                                for (const h of headings) {
+                                                      if (h.target.getBoundingClientRect().top <= 100) {
+                                                            current = h;
+                                                      }
+                                                }
+                                                tocLinks.forEach(l => l.classList.remove('toc-active'));
+                                                if (current) current.link.classList.add('toc-active');
+                                          }
 
-    const headings = content.querySelectorAll("h2, h3, h4, h5, h6");
+                                          window.addEventListener('scroll', updateActive, { passive: true });
+                                          updateActive();
+                                    })();
+                              </script>
+                        {%endif%}
 
-    if (headings.length === 0) {
-        document.getElementById("page-toc").style.display = "none";
-        return;
-    }
-
-    headings.forEach(function (heading, index) {
-        if (!heading.id) {
-            heading.id = "toc-heading-" + index;
-        }
-
-        const link = document.createElement("a");
-
-        link.href = "#" + heading.id;
-        link.textContent = heading.textContent.trim();
-
-        const level = parseInt(heading.tagName.substring(1));
-        link.style.display = "block";
-        link.style.marginLeft = ((level - 2) * 16) + "px";
-        link.style.marginBottom = "6px";
-
-        toc.appendChild(link);
-    });
-});
-</script>
-
-{%if settings.dgShowBacklinks === true %}
-
+                  {%endif%}
 
                         {%if settings.dgShowBacklinks === true %}
                               {%if settings.dgShowBacklinks === true %}
@@ -67,20 +65,4 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 {%- endif -%}
                                                 {%- for backlink in currentNode.backLinks -%}
                                                       {%- if graph.nodes[backlink].url != page.url and not graph.nodes[backlink].private -%}
-                                                      <div class="backlink-card">
-                                                            {%- if not meta.noteIconsSettings.backlinks -%}<i  data-lucide="link"></i> {%- endif -%}<a href="{{graph.nodes[backlink].url}}" data-note-icon="{{graph.nodes[backlink].noteIcon}}" class="backlink">{{graph.nodes[backlink].title}}</a>
-                                                      </div>
-                                                      {%- endif -%}
-                                                {%- endfor -%}
-                                          {%- endif -%}
-                                    </div>
-                              </div>
-                        {%endif%}
-                  {%endif%}
-                  {% set slotName = "sidebar.bottom" %}{% include "components/pluginSlot.njk" %}
-                  {% for imp in dynamics.sidebar.bottom %}
-                        {% include imp %}
-                  {% endfor %}
-            </div>
-      </div>
-</aside>
+                                                      <div class="backlink-card"
